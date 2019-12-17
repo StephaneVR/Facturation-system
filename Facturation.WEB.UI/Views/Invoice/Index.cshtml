@@ -1,0 +1,66 @@
+﻿@model PagedList.IPagedList<Facturation.DTO.InvoiceDTO>
+@using PagedList.Mvc;
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Facturen</h2>
+@using (Html.BeginForm())
+{
+    <p>
+    <div align="left" style="float: left">
+                <a href="@Url.Action("Create", "Invoice", null)">
+                    <img src="../../Icon/pen.svg" width="20" height="20" />Factuur aanmaken
+                </a>
+            </div>
+            <div align="right">
+                @Html.TextBox("SearchString")
+                <button title="Zoeken" input="submit" style="background-color: transparent; border: none"><img src="../../Icon/magnifying-glass.svg" width="20" height="20" /></button>
+            </div>
+    </p>
+}
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.ActionLink("Naam", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Datum", "Index", new { sortOrder = ViewBag.SortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Factuurcode", "Index", new { sortOrder = ViewBag.SortParm })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientDto.Name)
+            </td>
+            <td>
+                @item.Date.ToShortDateString()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InvoiceCode)
+            </td>
+
+            <td>
+                @Html.ActionLink("Aanpassen", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Detail lijn toevoegen", "Create", "InvoiceDetail", new { id = item.Id }, null) |
+
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount

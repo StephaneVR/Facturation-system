@@ -1,0 +1,17 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+
+@{
+    ViewBag.Title = "Create";
+}
+<h2>Maak nieuwe gerbuikers rol aan </h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+
+        @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+        <br />
+        <input type="submit" value="Rol aanmaken" class="btn btn-default" />
+    </div>
+}
+

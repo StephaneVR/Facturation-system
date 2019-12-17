@@ -1,0 +1,94 @@
+﻿@model Facturation.DTO.InvoiceDetailDTO
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Aanpassen</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Discount, "Korting",htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control", onchange = "ValidationValue('Discount')" } })
+                @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price,"Prijs", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", onchange = "ValidationValue('Price')" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pieces,"Aantal stuks", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pieces, new { htmlAttributes = new { @class = "form-control", onchange = "ValidationValue('Pieces')" } })
+                @Html.ValidationMessageFor(model => model.Pieces, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Vat,"Btw", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @class = "form-control", onchange = "ValidationValue('Vat')" } })
+                @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name,"Naam", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.InvoiceDTOId, "InvoiceDTOId", htmlAttributes: new { @style = "display:none" })
+            <div class="col-md-10">
+                @Html.DropDownList("InvoiceDTOId", null, htmlAttributes: new { @style = "display:none" })
+                @Html.ValidationMessageFor(model => model.InvoiceDTOId, "", new { @style = "display:none" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button title="Opslaan" type="submit" value="Opslaan" style ="background-color: transparent;border: none "><img src="../../Icon/save.svg" width="25" height="25" /> Opslaan</button>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a title="Terug naar overzicht" href="@Url.Action("Details", "Invoice", new {id = Model.InvoiceDTOId})">
+        <img src="../../Icon/back-arrow.svg" width="20" height="20" />
+    </a> 
+</div>
+<script type="text/javascript">
+    function ValidationValue(id) {
+        var input = document.getElementById(id).value;
+        var inputReplace = input.replace(/,/, ".");
+        if (input < 0 || isNaN(inputReplace)) {
+            alert("Het moet een positief nummer zijn");
+            document.getElementById(id).value = 0;
+        }
+    }
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,74 @@
+﻿@model Facturation.DTO.InvoiceDTO
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Factuur Aanpassen</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date,"Datum",htmlAttributes: new { @class = "control-label col-md-2" ,type = "Date" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" , type = "Date" } })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+       
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Deleted,"Verwijderen",htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Deleted)
+                    @Html.ValidationMessageFor(model => model.Deleted, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Finished, "Afgerond",htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Finished)
+                    @Html.ValidationMessageFor(model => model.Finished, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClientDTOId, "Klant", htmlAttributes: new { @style = "display:none" })
+            <div class="col-md-10">
+                @Html.DropDownList("ClientDTOId", null, htmlAttributes: new { @style = "display:none" })
+                @Html.ValidationMessageFor(model => model.ClientDTOId, "", new { @style = "display:none" })
+            </div>
+        </div>
+
+       
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button title="Opslaan" type="submit" value="Opslaan" style ="background-color: transparent;border: none "><img src="../../Icon/save.svg" width="25" height="25" /> Opslaan</button>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a title="Terug naar overzicht" href="@Url.Action("Index", "Invoice", new {id = Model.Id})">
+        <img src="../../Icon/back-arrow.svg" width="20" height="20" />
+    </a> 
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

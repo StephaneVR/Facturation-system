@@ -1,0 +1,134 @@
+﻿@using Facturation.DTO
+@using Facturation.WEB.UI.Controllers
+@model Facturation.DTO.InvoiceDTO
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Factuur detail</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            Datum
+        </dt>
+
+        <dd>
+            @Model.Date.ToShortDateString()
+        </dd>
+        <dt>
+        <dt>
+            Klant
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClientDto.Name)
+            @Html.DisplayFor(model => model.ClientDto.LastName)
+        </dd>
+        <dt>
+            Adres
+        </dt>
+        <dd>
+            @Html.DisplayFor(Model => Model.ClientDto.Adress)
+            @Html.DisplayFor(model => model.ClientDto.ZipcodeDto.Zipcodes)
+        </dd>
+        <dt>
+            Factuur code
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.InvoiceCode)
+        </dd>
+        <br />
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    Aantal stuks
+                </th>
+                <th>
+                    Prijs per stuk
+                </th>
+                <th>
+                    Korting
+                </th>
+                <th>
+                    BTW
+                </th>
+                <th>
+                    Naam product
+                </th>
+
+                <th>
+                    Prijs excl.
+                </th>
+                <th>
+                    Prijs incl.
+                </th>
+            </tr>
+            @for (int i = 0; i < Model.InvoiceDetails.Count; i++)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.InvoiceDetails.ToList()[i].Pieces) stk.
+                </td>
+                <td>
+                    €@Html.DisplayFor(modelItem => modelItem.InvoiceDetails.ToList()[i].Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.InvoiceDetails.ToList()[i].Discount)%
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.InvoiceDetails.ToList()[i].Vat)%
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.InvoiceDetails.ToList()[i].Name)
+                </td>
+                <td>
+                    € @ViewBag.PricesWithoutVat[i]
+                </td>
+                <td>
+                    € @ViewBag.PricesWithVat[i]
+                </td>
+                
+                <td class="hidden-print">
+                    <a title="Aanpassen" href="@Url.Action("Edit", "InvoiceDetail", new {id = Model.InvoiceDetails[i].Id})">
+                    <img src="../../Icon/pencil.svg" width="15" height="15"/>   |
+                    <a title="Verwijderen" href="@Url.Action("Delete", "InvoiceDetail", new {id = Model.InvoiceDetails[i].Id})">
+                    <img src="../../Icon/trash-alt-solid.svg" width="15" height="15"/></a></a>
+                </td>
+
+
+            </tr>
+            }
+           
+        </table>
+    </dl>
+</div>
+<br />
+<div>
+        <div>
+            <strong style="text-decoration: underline">Totaal</strong>
+        </div>
+        <h5>
+            <strong>Prijs excl: € @ViewBag.TotalPriceWithoutVat </strong>
+        </h5>
+        <h5>
+            <strong>Prijs incl: € @ViewBag.TotalPriceWithVAT </strong>
+        </h5>
+        <br />
+        <div class="hidden-print">
+            <p>
+                <a title="Factuur Aanpassen" href="@Url.Action("Edit", "Invoice", new {id = Model.Id})">
+                    <img src="../../Icon/pencil.svg" width="20" height="20" />
+                </a> |
+                <a title="Factuur afprinten" href="javascript:window.print()" class="hidden-print">
+                    <img src="../../Icon/print.svg" width="20" height="20"/>
+                </a> |
+                <a title="Terug naar overzicht" href="@Url.Action("Index", "Invoice", new {id = Model.Id})">
+                    <img src="../../Icon/back-arrow.svg" width="20" height="20" />
+                </a> 
+            </p>
+        </div>
+</div>

@@ -1,0 +1,82 @@
+﻿@model PagedList.IPagedList<Facturation.DTO.ClientDTO>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Klanten overzicht</h2>
+
+@using (Html.BeginForm())
+{
+<p>
+    <div align="left" style="float: left">
+        <a href="@Url.Action("Create", "Client", null)">
+            <img src="../../Icon/pen.svg" width="20" height="20" />Klant aanmaken
+        </a>
+    </div>
+    <div align="right">
+        @Html.TextBox("SearchString")
+        <button title="Zoeken" input="submit" style="background-color: transparent; border: none"><img src="../../Icon/magnifying-glass.svg" width="20" height="20" /></button>
+    </div>
+</p>
+}
+<table class="table table-striped">
+    <tr>
+
+        <th>
+            @Html.ActionLink("Naam", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            Achternaam
+        </th>
+        <th>
+            Btwnummer
+        </th>
+        <th>
+            E-mailadress
+        </th>
+        <th>
+            Adres
+        </th>
+        <th>
+            Postcode
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZipcodeDto.Zipcodes)
+            </td>
+            <td>
+                @Html.ActionLink("Klant details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Aanpassen", "Edit", new { id = item.Id }) |
+
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount

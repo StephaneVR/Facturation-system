@@ -1,0 +1,71 @@
+﻿@model Facturation.DTO.ClientDTO
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Klant details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            Voornaam
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            Achternaam
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            Btw nummer
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vat)
+        </dd>
+
+        <dt>
+           E-mailadres
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            Adres
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adress)
+        </dd>
+        <dt>
+            Postcode
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZipcodeDto.Zipcodes)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    
+    <td class="hidden-print">
+  
+    <a title="Terug naar overzicht" href="@Url.Action("Index", "Client", new {id = Model.Id})">
+        <img src="../../Icon/back-arrow.svg" width="20" height="20" /> |
+    <a title="Aanpassen" href="@Url.Action("Edit", "Client", new {id = Model.Id})">
+        <img src="../../Icon/pencil.svg" width="15" height="15"/>   
+    </a>
+</p>
