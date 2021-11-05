@@ -22,7 +22,7 @@ namespace Facturation.BLL
             o.Subject = subject;
             o.Body = body;
 
-            NetworkCredential netCred = new NetworkCredential("systeemfacturen@gmail.com", "SysteemFacturen123");
+            NetworkCredential netCred = new NetworkCredential("//add email", "//add credentials");
             SmtpClient smtpobj = new SmtpClient("smtp.gmail.com", 587);
             smtpobj.EnableSsl = true;
             smtpobj.Credentials = netCred;
